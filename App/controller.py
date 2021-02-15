@@ -51,7 +51,6 @@ def loadData(catalog):
     loadBooks(catalog)
     loadTags(catalog)
     loadBooksTags(catalog)
-    sortBooks(catalog)
 
 
 def loadBooks(catalog):
@@ -88,11 +87,11 @@ def loadBooksTags(catalog):
 
 # Funciones de ordenamiento
 
-def sortBooks(catalog):
+def sortBooks(catalog, size):
     """
     Ordena los libros por average_rating
     """
-    model.sortBooks(catalog)
+    return model.sortBooks(catalog, size)
 
 
 # Funciones de consulta sobre el catálogo
