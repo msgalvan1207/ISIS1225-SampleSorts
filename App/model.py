@@ -26,6 +26,7 @@
 
 
 import config as cf
+import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
@@ -196,5 +197,11 @@ def comparetagnames(name, tag):
 
 # Funciones de ordenamiento
 
-def sortBooks(catalog):
-    sa.sort(catalog['books'], compareratings)
+def sortBooks(catalog, size):
+    sub_list = lt.subList(catalog['books'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sa.sort(sub_list, compareratings)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg

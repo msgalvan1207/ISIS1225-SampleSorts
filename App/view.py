@@ -41,6 +41,7 @@ def printMenu():
     print("2- Consultar los Top x libros por promedio")
     print("3- Consultar los libros de un autor")
     print("4- Libros por género")
+    print("5 - Prueba de ordenamiento")
     print("0- Salir")
 
 
@@ -79,6 +80,7 @@ def printBestBooks(books):
     else:
         print('No se encontraron libros')
 
+
 catalog = None
 
 """
@@ -111,6 +113,12 @@ while True:
         label = input("Etiqueta a buscar: ")
         book_count = controller.countBooksByTag(catalog, label)
         print('Se encontraron: ', book_count, ' Libros')
+
+    elif int(inputs[0]) == 5:
+        size = input("Indique tamaño de la muestra: ")
+        elapsed_time = controller.sortBooks(catalog, int(size))
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+                                          str(elapsed_time))
 
     else:
         sys.exit(0)
