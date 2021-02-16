@@ -80,7 +80,6 @@ def printBestBooks(books):
     else:
         print('No se encontraron libros')
 
-
 catalog = None
 
 """
@@ -116,9 +115,9 @@ while True:
 
     elif int(inputs[0]) == 5:
         size = input("Indique tamaño de la muestra: ")
-        elapsed_time = controller.sortBooks(catalog, int(size))
+        result = controller.sortBooks(catalog, int(size))
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
-                                          str(elapsed_time))
+                                          str(result))
 
     else:
         sys.exit(0)
