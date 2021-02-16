@@ -41,7 +41,7 @@ def printMenu():
     print("2- Consultar los Top x libros por promedio")
     print("3- Consultar los libros de un autor")
     print("4- Libros por género")
-    print("5 - Prueba de ordenamiento")
+    print("5 - Ordenar los libros por rating")
     print("0- Salir")
 
 
@@ -118,7 +118,7 @@ while True:
         size = input("Indique tamaño de la muestra: ")
         elapsed_time = controller.sortBooks(catalog, int(size))
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
-                                          str(elapsed_time))
+                                          str(elapsed_time[0]))
 
     else:
         sys.exit(0)
