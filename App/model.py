@@ -192,13 +192,17 @@ def compareratings(book1, book2):
 
 
 def comparetagnames(name, tag):
-    return (name == tag['name'])
-
+    if (name == tag['name']):
+        return 0
+    elif (name > tag['name']):
+        return 1
+    return -1
 
 # Funciones de ordenamiento
 
 def sortBooks(catalog, size):
-    sub_list = lt.subList(catalog['books'], 0, size)
+    # TODO completar modificaciones para el laboratorio 4
+    sub_list = lt.subList(catalog['books'], 1, size)
     sub_list = sub_list.copy()
     start_time = time.process_time()
     sa.sort(sub_list, compareratings)
