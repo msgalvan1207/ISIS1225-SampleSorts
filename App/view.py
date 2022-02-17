@@ -18,6 +18,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
+ * Contribuciones
+ *
+ * Dario Correal
  """
 
 import config as cf
@@ -35,6 +38,14 @@ operación solicitada
 """
 
 
+def newController():
+    """
+    Se crea una instancia del controlador
+    """
+    control = controller.newController()
+    return control
+
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
@@ -45,18 +56,12 @@ def printMenu():
     print("0- Salir")
 
 
-def initCatalog():
+def loadData():
     """
-    Inicializa el catalogo de libros
+    Solicita al controlador que cargue los datos en el modelo
     """
-    return controller.initCatalog()
-
-
-def loadData(catalog):
-    """
-    Carga los libros en la estructura de datos
-    """
-    controller.loadData(catalog)
+    books, authors, tags, book_tags = controller.loadData(control)
+    return books, authors, tags, book_tags
 
 
 def printAuthorData(author):
@@ -81,11 +86,13 @@ def printBestBooks(books):
         print('No se encontraron libros')
 
 
-def printSortResults(ord_books, sample=10):
-    # TODO completar modificaciones para el laboratorio 4
+def printSortResults(sort_books, sample=3):
+    # TODO completar funcion para imprimir resultados sort lab 4
     pass
 
-catalog = None
+
+# Se crea el controlador asociado a la vista
+control = newController()
 
 """
 Menu principal
@@ -95,36 +102,38 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
-        loadData(catalog)
-        print('Libros cargados: ' + str(lt.size(catalog['books'])))
-        print('Autores cargados: ' + str(lt.size(catalog['authors'])))
-        print('Géneros cargados: ' + str(lt.size(catalog['tags'])))
+        bk, at, tg, bktg = loadData()
+        print('Libros cargados: ' + str(bk))
+        print('Autores cargados: ' + str(at))
+        print('Géneros cargados: ' + str(tg))
         print('Asociación de Géneros a Libros cargados: ' +
-              str(lt.size(catalog['book_tags'])))
+              str(bktg))
 
     elif int(inputs[0]) == 2:
         number = input("Buscando los TOP ?: ")
-        books = controller.getBestBooks(catalog, int(number))
+        books = controller.getBestBooks(control, int(number))
         printBestBooks(books)
 
     elif int(inputs[0]) == 3:
         authorname = input("Nombre del autor a buscar: ")
-        author = controller.getBooksByAuthor(catalog, authorname)
+        author = controller.getBooksByAuthor(control, authorname)
         printAuthorData(author)
 
     elif int(inputs[0]) == 4:
         label = input("Etiqueta a buscar: ")
-        book_count = controller.countBooksByTag(catalog, label)
+        book_count = controller.countBooksByTag(control, label)
         print('Se encontraron: ', book_count, ' Libros')
 
     elif int(inputs[0]) == 5:
         # TODO completar modificaciones para el laboratorio 4
         size = input("Indique tamaño de la muestra: ")
-        result = controller.sortBooks(catalog, int(size))
-        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
-                                          str(result))
+        result = controller.sortBooks(control, int(size))
+        result = f"{result[1]:.3f}"
+        print("Para", size, "elementos, delta tiempo:", str(result))
+
+    elif int(inputs[0]) == 0:
+        sys.exit(0)
 
     else:
-        sys.exit(0)
+        continue
 sys.exit(0)
