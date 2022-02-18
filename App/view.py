@@ -128,7 +128,7 @@ while True:
         # TODO completar modificaciones para el laboratorio 4
         size = input("Indique tamaño de la muestra: ")
         result = controller.sortBooks(control, int(size))
-        result = f"{result[1]:.3f}"
+        result = f"{result:.3f}"
         print("Para", size, "elementos, delta tiempo:", str(result))
 
     elif int(inputs[0]) == 0:
