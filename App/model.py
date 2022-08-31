@@ -52,7 +52,8 @@ def newCatalog():
                'tags': None,
                'book_tags': None}
 
-    catalog['books'] = lt.newList('ARRAY_LIST')
+    catalog['books'] = lt.newList('ARRAY_LIST',
+                                  cmpfunction=comparebooks)
     catalog['authors'] = lt.newList('SINGLE_LINKED',
                                     cmpfunction=compareauthors)
     catalog['tags'] = lt.newList('SINGLE_LINKED',
@@ -213,6 +214,14 @@ def comparetagnames(name, tag):
     if (name == tag['name']):
         return 0
     elif (name > tag['name']):
+        return 1
+    return -1
+
+
+def comparebooks(bookid1, book):
+    if bookid1 == book['goodreads_book_id']:
+        return 0
+    elif bookid1 > book['goodreads_book_id']:
         return 1
     return -1
 
