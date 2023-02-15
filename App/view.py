@@ -129,7 +129,7 @@ while True:
         size = input("Indique tamaño de la muestra: ")
         result = controller.sortBooks(control, int(size))
         result = f"{result:.3f}"
-        print("Para", size, "elementos, delta tiempo:", str(result))
+        print("Para", size, "elementos, delta tiempo:", str(result), " [ms] \n")
 
     elif int(inputs[0]) == 0:
         sys.exit(0)
