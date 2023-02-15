@@ -66,24 +66,24 @@ def loadData():
 
 def printAuthorData(author):
     if author:
-        print('Autor encontrado: ' + author['name'])
-        print('Promedio: ' + str(author['average_rating']))
-        print('Total de libros: ' + str(lt.size(author['books'])))
-        for book in lt.iterator(author['books']):
-            print('Titulo: ' + book['title'] + '  ISBN: ' + book['isbn'])
+        print("Autor encontrado: " + author["name"])
+        print("Promedio: " + str(author["average_rating"]))
+        print("Total de libros: " + str(lt.size(author["books"])))
+        for book in lt.iterator(author["books"]):
+            print("Titulo: " + book["title"] + "  ISBN: " + book["isbn"])
     else:
-        print('No se encontro el autor')
+        print("No se encontro el autor")
 
 
 def printBestBooks(books):
     size = lt.size(books)
     if size:
-        print(' Estos son los mejores libros: ')
+        print(" Estos son los mejores libros: ")
         for book in lt.iterator(books):
-            print('Titulo: ' + book['title'] + '  ISBN: ' +
-                  book['isbn'] + ' Rating: ' + book['average_rating'])
+            print("Titulo: " + book["title"] + "  ISBN: " +
+                  book["isbn"] + " Rating: " + book["average_rating"])
     else:
-        print('No se encontraron libros')
+        print("No se encontraron libros")
 
 
 def printSortResults(sort_books, sample=3):
@@ -94,46 +94,52 @@ def printSortResults(sort_books, sample=3):
 # Se crea el controlador asociado a la vista
 control = newController()
 
-"""
-Menu principal
-"""
-while True:
-    printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
-        bk, at, tg, bktg = loadData()
-        print('Libros cargados: ' + str(bk))
-        print('Autores cargados: ' + str(at))
-        print('Géneros cargados: ' + str(tg))
-        print('Asociación de Géneros a Libros cargados: ' +
-              str(bktg))
 
-    elif int(inputs[0]) == 2:
-        number = input("Buscando los TOP ?: ")
-        books = controller.getBestBooks(control, int(number))
-        printBestBooks(books)
+# main del ejercicio
+if __name__ == "__main__":
 
-    elif int(inputs[0]) == 3:
-        authorname = input("Nombre del autor a buscar: ")
-        author = controller.getBooksByAuthor(control, authorname)
-        printAuthorData(author)
+    """
+    Menu principal
+    """
+    working = True
+    #ciclo del menu
+    while working:
+        printMenu()
+        inputs = input("Seleccione una opción para continuar\n")
+        if int(inputs[0]) == 1:
+            print("Cargando información de los archivos ....")
+            bk, at, tg, bktg = loadData()
+            print("Libros cargados: " + str(bk))
+            print("Autores cargados: " + str(at))
+            print("Géneros cargados: " + str(tg))
+            print("Asociación de Géneros a Libros cargados: " + str(bktg))
 
-    elif int(inputs[0]) == 4:
-        label = input("Etiqueta a buscar: ")
-        book_count = controller.countBooksByTag(control, label)
-        print('Se encontraron: ', book_count, ' Libros')
+        elif int(inputs[0]) == 2:
+            number = input("Buscando los TOP ?: ")
+            books = controller.getBestBooks(control, int(number))
+            printBestBooks(books)
 
-    elif int(inputs[0]) == 5:
-        # TODO completar modificaciones para el laboratorio 4
-        size = input("Indique tamaño de la muestra: ")
-        result = controller.sortBooks(control, int(size))
-        result = f"{result:.3f}"
-        print("Para", size, "elementos, delta tiempo:", str(result), " [ms] \n")
+        elif int(inputs[0]) == 3:
+            authorname = input("Nombre del autor a buscar: ")
+            author = controller.getBooksByAuthor(control, authorname)
+            printAuthorData(author)
 
-    elif int(inputs[0]) == 0:
-        sys.exit(0)
+        elif int(inputs[0]) == 4:
+            label = input("Etiqueta a buscar: ")
+            book_count = controller.countBooksByTag(control, label)
+            print("Se encontraron: ", book_count, " Libros")
 
-    else:
-        continue
-sys.exit(0)
+        elif int(inputs[0]) == 5:
+            # TODO completar modificaciones para el laboratorio 4
+            size = input("Indique tamaño de la muestra: ")
+            result = controller.sortBooks(control, int(size))
+            result = f"{result:.3f}"
+            print("Para", size, "elementos, delta tiempo:",
+                  str(result), "[ms]\n")
+
+        elif int(inputs[0]) == 0:
+            sys.exit(0)
+
+        else:
+            continue
+    sys.exit(0)

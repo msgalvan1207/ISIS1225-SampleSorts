@@ -46,18 +46,18 @@ def newCatalog():
     una lista vacia para los generos y una lista vacia para la asociación
     generos y libros. Retorna el catalogo inicializado.
     """
-    catalog = {'books': None,
-               'authors': None,
-               'tags': None,
-               'book_tags': None}
+    catalog = {"books": None,
+               "authors": None,
+               "tags": None,
+               "book_tags": None}
 
-    catalog['books'] = lt.newList('ARRAY_LIST',
+    catalog["books"] = lt.newList("ARRAY_LIST",
                                   cmpfunction=comparebooks)
-    catalog['authors'] = lt.newList('SINGLE_LINKED',
+    catalog["authors"] = lt.newList("SINGLE_LINKED",
                                     cmpfunction=compareauthors)
-    catalog['tags'] = lt.newList('SINGLE_LINKED',
+    catalog["tags"] = lt.newList("SINGLE_LINKED",
                                  cmpfunction=comparetagnames)
-    catalog['book_tags'] = lt.newList('ARRAY_LIST')
+    catalog["book_tags"] = lt.newList("ARRAY_LIST")
 
     return catalog
 
@@ -66,9 +66,9 @@ def newCatalog():
 
 def addBook(catalog, book):
     # Se adiciona el libro a la lista de libros
-    lt.addLast(catalog['books'], book)
+    lt.addLast(catalog["books"], book)
     # Se obtienen los autores del libro
-    authors = book['authors'].split(",")
+    authors = book["authors"].split(",")
     # Cada autor, se crea en la lista de libros del catalogo, y se
     # crea un libro en la lista de dicho autor (apuntador al libro)
     for author in authors:
@@ -81,14 +81,14 @@ def addBookAuthor(catalog, authorname, book):
     Adiciona un autor a lista de autores, la cual guarda referencias
     a los libros de dicho autor
     """
-    authors = catalog['authors']
+    authors = catalog["authors"]
     posauthor = lt.isPresent(authors, authorname)
     if posauthor > 0:
         author = lt.getElement(authors, posauthor)
     else:
         author = newAuthor(authorname)
         lt.addLast(authors, author)
-    lt.addLast(author['books'], book)
+    lt.addLast(author["books"], book)
     return catalog
 
 
@@ -96,8 +96,8 @@ def addTag(catalog, tag):
     """
     Adiciona un tag a la lista de tags
     """
-    t = newTag(tag['tag_name'], tag['tag_id'])
-    lt.addLast(catalog['tags'], t)
+    t = newTag(tag["tag_name"], tag["tag_id"])
+    lt.addLast(catalog["tags"], t)
     return catalog
 
 
@@ -105,8 +105,8 @@ def addBookTag(catalog, booktag):
     """
     Adiciona un tag a la lista de tags
     """
-    t = newBookTag(booktag['tag_id'], booktag['goodreads_book_id'])
-    lt.addLast(catalog['book_tags'], t)
+    t = newBookTag(booktag["tag_id"], booktag["goodreads_book_id"])
+    lt.addLast(catalog["book_tags"], t)
     return catalog
 
 
@@ -117,9 +117,9 @@ def newAuthor(name):
     Crea una nueva estructura para modelar los libros de
     un autor y su promedio de ratings
     """
-    author = {'name': "", "books": None,  "average_rating": 0}
-    author['name'] = name
-    author['books'] = lt.newList('ARRAY_LIST')
+    author = {"name": "", "books": None,  "average_rating": 0}
+    author["name"] = name
+    author["books"] = lt.newList("ARRAY_LIST")
     return author
 
 
@@ -127,9 +127,9 @@ def newTag(name, id):
     """
     Esta estructura almancena los tags utilizados para marcar libros.
     """
-    tag = {'name': '', 'tag_id': ''}
-    tag['name'] = name
-    tag['tag_id'] = id
+    tag = {"name": "", "tag_id": ""}
+    tag["name"] = name
+    tag["tag_id"] = id
     return tag
 
 
@@ -138,7 +138,7 @@ def newBookTag(tag_id, book_id):
     Esta estructura crea una relación entre un tag y
     los libros que han sido marcados con dicho tag.
     """
-    booktag = {'tag_id': tag_id, 'book_id': book_id}
+    booktag = {"tag_id": tag_id, "book_id": book_id}
     return booktag
 
 
@@ -148,9 +148,9 @@ def getBooksByAuthor(catalog, authorname):
     """
     Retorna un autor con sus libros a partir del nombre del autor
     """
-    posauthor = lt.isPresent(catalog['authors'], authorname)
+    posauthor = lt.isPresent(catalog["authors"], authorname)
     if posauthor > 0:
-        author = lt.getElement(catalog['authors'], posauthor)
+        author = lt.getElement(catalog["authors"], posauthor)
         return author
     return None
 
@@ -159,7 +159,7 @@ def getBestBooks(catalog, number):
     """
     Retorna los mejores libros
     """
-    books = catalog['books']
+    books = catalog["books"]
     bestbooks = lt.newList()
     for cont in range(1, number+1):
         book = lt.getElement(books, cont)
@@ -171,56 +171,56 @@ def countBooksByTag(catalog, tag):
     """
     Retorna los libros que fueron etiquetados con el tag
     """
-    tags = catalog['tags']
+    tags = catalog["tags"]
     bookcount = 0
     pos = lt.isPresent(tags, tag)
     if pos > 0:
         tag_element = lt.getElement(tags, pos)
         if tag_element is not None:
-            for book_tag in lt.iterator(catalog['book_tags']):
-                if tag_element['tag_id'] == book_tag['tag_id']:
+            for book_tag in lt.iterator(catalog["book_tags"]):
+                if tag_element["tag_id"] == book_tag["tag_id"]:
                     bookcount += 1
     return bookcount
 
 
 def bookSize(catalog):
-    return lt.size(catalog['books'])
+    return lt.size(catalog["books"])
 
 
 def authorSize(catalog):
-    return lt.size(catalog['authors'])
+    return lt.size(catalog["authors"])
 
 
 def tagSize(catalog):
-    return lt.size(catalog['tags'])
+    return lt.size(catalog["tags"])
 
 
 def bookTagSize(catalog):
-    return lt.size(catalog['book_tags'])
+    return lt.size(catalog["book_tags"])
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareauthors(authorname1, author):
-    if authorname1.lower() == author['name'].lower():
+    if authorname1.lower() == author["name"].lower():
         return 0
-    elif authorname1.lower() > author['name'].lower():
+    elif authorname1.lower() > author["name"].lower():
         return 1
     return -1
 
 
 def comparetagnames(name, tag):
-    if (name == tag['name']):
+    if (name == tag["name"]):
         return 0
-    elif (name > tag['name']):
+    elif (name > tag["name"]):
         return 1
     return -1
 
 
 def comparebooks(bookid1, book):
-    if bookid1 == book['goodreads_book_id']:
+    if bookid1 == book["goodreads_book_id"]:
         return 0
-    elif bookid1 > book['goodreads_book_id']:
+    elif bookid1 > book["goodreads_book_id"]:
         return 1
     return -1
 
@@ -229,13 +229,13 @@ def comparebooks(bookid1, book):
 
 def compareratings(book1, book2):
     # TODO modificar operador de comparacion lab 4
-    return (float(book1['average_rating']) > float(book2['average_rating']))
+    return (float(book1["average_rating"]) > float(book2["average_rating"]))
 
 
 # Funciones de ordenamiento
 
 def sortBooks(catalog, size):
     # TODO completar los cambios del return en el sort para el lab 4 (Parte 1).
-    sub_list = lt.subList(catalog['books'], 1, size)
+    sub_list = lt.subList(catalog["books"], 1, size)
     sa.sort(sub_list, compareratings)
 
