@@ -102,7 +102,7 @@ if __name__ == "__main__":
     Menu principal
     """
     working = True
-    #ciclo del menu
+    # ciclo del menu
     while working:
         printMenu()
         inputs = input("Seleccione una opción para continuar\n")

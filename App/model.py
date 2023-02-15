@@ -238,4 +238,3 @@ def sortBooks(catalog, size):
     # TODO completar los cambios del return en el sort para el lab 4 (Parte 1).
     sub_list = lt.subList(catalog["books"], 1, size)
     sa.sort(sub_list, compareratings)
-

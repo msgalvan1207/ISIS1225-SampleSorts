@@ -102,9 +102,10 @@ def loadBooksTags(catalog):
 
 def sortBooks(control, size):
     """
-    Ordena los libros por average_rating y toma el los tiempos en los 
-    que se inició la ejecución del requerimiento y cuando finalizó con getTime().
-    Finalmente calcula el tiempo que demoró la ejecución de la función con deltaTime()
+    Ordena los libros por average_rating y toma el los tiempos en los
+    que se inició la ejecución del requerimiento y cuando finalizó
+    con getTime(). Finalmente calcula el tiempo que demoró la ejecución
+    de la función con deltaTime()
     """
     # TODO completar los cambios del return en el sort para el lab 4 (Parte 2).
     start_time = getTime()
@@ -139,6 +140,7 @@ def countBooksByTag(control, tag):
     return model.countBooksByTag(control["model"], tag)
 
 # Funciones para medir tiempos de ejecucion
+
 
 def getTime():
     """
