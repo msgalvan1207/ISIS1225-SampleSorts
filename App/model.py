@@ -26,7 +26,6 @@
 
 
 import config as cf
-import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
@@ -236,27 +235,7 @@ def compareratings(book1, book2):
 # Funciones de ordenamiento
 
 def sortBooks(catalog, size):
-    # TODO completar los cambios del return en el sort para el lab 4
+    # TODO completar los cambios del return en el sort para el lab 4 (Parte 1).
     sub_list = lt.subList(catalog['books'], 1, size)
-    start_time = getTime()
     sa.sort(sub_list, compareratings)
-    end_time = getTime()
-    delta_time = deltaTime(start_time, end_time)
-    return delta_time
 
-
-# Funciones para medir tiempos de ejecucion
-
-def getTime():
-    """
-    devuelve el instante tiempo de procesamiento en milisegundos
-    """
-    return float(time.perf_counter()*1000)
-
-
-def deltaTime(start, end):
-    """
-    devuelve la diferencia entre tiempos de procesamiento muestreados
-    """
-    elapsed = float(end - start)
-    return elapsed

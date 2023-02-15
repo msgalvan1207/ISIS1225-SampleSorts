@@ -26,6 +26,7 @@
 
 import config as cf
 import model
+import time
 import csv
 
 
@@ -101,9 +102,16 @@ def loadBooksTags(catalog):
 
 def sortBooks(control, size):
     """
-    Ordena los libros por average_rating
+    Ordena los libros por average_rating y toma el los tiempos en los 
+    que se inició la ejecución del requerimiento y cuando finalizó con getTime().
+    Finalmente calcula el tiempo que demoró la ejecución de la función con deltaTime()
     """
-    return model.sortBooks(control['model'], size)
+    # TODO completar los cambios del return en el sort para el lab 4 (Parte 2).
+    start_time = getTime()
+    model.sortBooks(control['model'], size)
+    end_time = getTime()
+    delta_time = deltaTime(start_time, end_time)
+    return delta_time
 
 
 # Funciones de consulta sobre el catálogo
@@ -129,3 +137,19 @@ def countBooksByTag(control, tag):
     Retorna los libros que fueron etiquetados con el tag
     """
     return model.countBooksByTag(control['model'], tag)
+
+# Funciones para medir tiempos de ejecucion
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return float(time.perf_counter()*1000)
+
+
+def deltaTime(start, end):
+    """
+    devuelve la diferencia entre tiempos de procesamiento muestreados
+    """
+    elapsed = float(end - start)
+    return elapsed
