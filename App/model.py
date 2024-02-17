@@ -27,7 +27,16 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import selectionsort as ses
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import shellsort as shs
+from DISClib.Algorithms.Sorting import mergesort as mes
+from DISClib.Algorithms.Sorting import quicksort as qus
+from DISClib.Algorithms.Sorting import heapsort as hes
+from DISClib.Algorithms.Sorting import bogosort as bos
+
+# TODO importar el modulo de ordenamiento personalizado para el lab 5
+# from DISClib.Algorithms.Sorting import customsort as cus
 assert cf
 
 """
@@ -36,9 +45,11 @@ El catálogo tendrá tres listas, una para libros, otra para autores
 y otra para géneros
 """
 
+# algoritmos de ordenamiento, por defecto no se ha seleccionado ninguno
+sort_algorithm = None
+
+
 # Construccion de modelos
-
-
 def newCatalog():
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
@@ -52,12 +63,15 @@ def newCatalog():
                "book_tags": None}
 
     catalog["books"] = lt.newList("ARRAY_LIST",
-                                  cmpfunction=comparebooks)
+                                  cmpfunction=cmpBooks)
     catalog["authors"] = lt.newList("SINGLE_LINKED",
-                                    cmpfunction=compareauthors)
+                                    cmpfunction=cmpAuthors)
     catalog["tags"] = lt.newList("SINGLE_LINKED",
-                                 cmpfunction=comparetagnames)
+                                 cmpfunction=cmpTagNames)
     catalog["book_tags"] = lt.newList("ARRAY_LIST")
+
+    # llave temporal para el submuestreo de datos
+    catalog["booksublist"] = None
 
     return catalog
 
@@ -142,6 +156,89 @@ def newBookTag(tag_id, book_id):
     return booktag
 
 
+# funciones de configuracion para los algoritmos de ordenamiento
+
+def selectSortAlgorithm(algo_opt):
+    """selectSortAlgorithm permite seleccionar el algoritmo de ordenamiento
+    para la lista de pokemon.
+
+    Args:
+        algo_opt (int): opcion de algoritmo de ordenamiento, las opciones son:
+            1: Selection Sort
+            2: Insertion Sort
+            3: Shell Sort
+            4: Merge Sort
+            5: Quick Sort
+            6: Heap Sort
+            7: Bogo Sort
+            8: Custom Sort (timsort o bucketsort)
+
+    Returns:
+        list: sort_algorithm (sort) la instancia del ordenamiento y
+        algo_msg (str) el texto que describe la configuracion del ordenamiento
+    """
+    # TODO completar el ordenamiento personalizado para el lab 5
+    # TODO nuevo del lab 5
+    # respuestas por defecto
+    sort_algorithm = None
+    algo_msg = None
+
+    # selecciona el algoritmo de ordenamiento
+    # opcion 1: Selection Sort
+    if algo_opt == 1:
+        sort_algorithm = ses
+        algo_msg = "Seleccionó la configuración - Selection Sort"
+
+    # opcion 2: Insertion Sort
+    elif algo_opt == 2:
+        sort_algorithm = ins
+        algo_msg = "Seleccionó la configuración - Insertion Sort"
+
+    # opcion 3: Shell Sort
+    elif algo_opt == 3:
+        sort_algorithm = shs
+        algo_msg = "Seleccionó la configuración - Shell Sort"
+
+    # opcion 4: Merge Sort
+    elif algo_opt == 4:
+        sort_algorithm = mes
+        algo_msg = "Seleccionó la configuración - Merge Sort"
+
+    # opcion 5: Quick Sort
+    elif algo_opt == 5:
+        sort_algorithm = qus
+        algo_msg = "Seleccionó la configuración - Quick Sort"
+
+    # opcion 6: Heap Sort
+    elif algo_opt == 6:
+        sort_algorithm = hes
+        algo_msg = "Seleccionó la configuración - Heap Sort"
+
+    # opcion 7: Bogo Sort
+    elif algo_opt == 7:
+        sort_algorithm = bos
+        algo_msg = "Seleccionó la configuración - Bogo Sort"
+
+    # opcion 6: Custom Sort, timsort o bucketsort
+    # TODO completar el ordenamiento personalizado para el lab 5
+    elif algo_opt == 8:
+        # pass
+        # sort_algorithm = cus
+        algo_msg = "Seleccionó la configuración - Custom Sort (Tim o Bucket)"
+    # respuesta final: algoritmo de ordenamiento y texto de configuracion
+    return sort_algorithm, algo_msg
+
+
+def setBookSublist(catalog, size):
+    """
+    Crea una sublista de libros de tamaño size
+    """
+    # TODO nuevo del lab 5
+    books = catalog["books"]
+    catalog["booksublist"] = lt.subList(books, 1, size)
+    return catalog
+
+
 # Funciones de consulta
 
 def getBooksByAuthor(catalog, authorname):
@@ -201,7 +298,7 @@ def bookTagSize(catalog):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
-def compareauthors(authorname1, author):
+def cmpAuthors(authorname1, author):
     if authorname1.lower() == author["name"].lower():
         return 0
     elif authorname1.lower() > author["name"].lower():
@@ -209,7 +306,7 @@ def compareauthors(authorname1, author):
     return -1
 
 
-def comparetagnames(name, tag):
+def cmpTagNames(name, tag):
     if (name == tag["name"]):
         return 0
     elif (name > tag["name"]):
@@ -217,7 +314,7 @@ def comparetagnames(name, tag):
     return -1
 
 
-def comparebooks(bookid1, book):
+def cmpBooks(bookid1, book):
     if bookid1 == book["goodreads_book_id"]:
         return 0
     elif bookid1 > book["goodreads_book_id"]:
@@ -227,14 +324,16 @@ def comparebooks(bookid1, book):
 
 # funciones para comparar elementos dentro de algoritmos de ordenamientos
 
-def compareratings(book1, book2):
-    # TODO modificar operador de comparacion lab 4
+def evalRatings(book1, book2):
+    # TODO modificar operador de comparacion del lab 5
     return (float(book1["average_rating"]) > float(book2["average_rating"]))
 
 
 # Funciones de ordenamiento
 
-def sortBooks(catalog, size):
-    # TODO completar los cambios del return en el sort para el lab 4 (Parte 1).
-    sub_list = lt.subList(catalog["books"], 1, size)
-    sa.sort(sub_list, compareratings)
+def sortBooks(catalog):
+    # TODO completar los cambios del return en el sort para el lab 5 (Parte 1).
+    # TODO nuevo del lab 5
+    sorted_books = catalog["booksublist"]
+    sort_algorithm.sort(sorted_books, evalRatings)
+    return sorted_books

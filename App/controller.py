@@ -48,8 +48,33 @@ def newController():
     return control
 
 
-# Funciones para la carga de datos
+# funciones de configuración para los algoritmos de ordenamiento
 
+def setSortAlgorithm(algo_opt):
+    """
+    Configura el algoritmo de ordenamiento que se va a utilizar en el
+    modelo y retorna un mensaje que informa al usuario.
+    """
+    # TODO nuevo del lab 5 (Parte 2)
+    ans = model.selectSortAlgorithm(algo_opt)
+    # TODO mirar ojo!!!!
+    algorithm = ans[0]
+    model.sort_algorithm = algorithm
+    algoritm_msg = ans[1]
+    return algoritm_msg
+
+
+def setBookSublist(control, size):
+    """
+    Retorna una sublista de libros
+    """
+    # TODO nuevo del lab 5 (Parte 2)
+    catalog = control["model"]
+    control["model"] = model.setBookSublist(catalog, size)
+    return control
+
+
+# Funciones para la carga de datos
 
 def loadData(control):
     """
@@ -100,19 +125,20 @@ def loadBooksTags(catalog):
 
 # Funciones de ordenamiento
 
-def sortBooks(control, size):
+def sortBooks(control):
     """
     Ordena los libros por average_rating y toma el los tiempos en los
     que se inició la ejecución del requerimiento y cuando finalizó
     con getTime(). Finalmente calcula el tiempo que demoró la ejecución
     de la función con deltaTime()
     """
-    # TODO completar los cambios del return en el sort para el lab 4 (Parte 2).
+    # TODO completar los cambios del return en el sort para el lab 5 (Parte 2).
+    # TODO nuevo del lab 5 (Parte 2)
     start_time = getTime()
-    model.sortBooks(control["model"], size)
+    sorted_books = model.sortBooks(control["model"])
     end_time = getTime()
     delta_time = deltaTime(start_time, end_time)
-    return delta_time
+    return sorted_books, delta_time
 
 
 # Funciones de consulta sobre el catálogo
