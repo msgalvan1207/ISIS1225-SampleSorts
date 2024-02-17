@@ -80,6 +80,6 @@ def is_sorted(lst, sort_crit, size):
     """
     for pos in range(1, size):
         if sort_crit(lt.getElement(lst, pos),
-                     lt.getElement(lst, pos+1)) is not True:
+                     lt.getElement(lst, pos + 1)) is not True:
             return False
     return True
