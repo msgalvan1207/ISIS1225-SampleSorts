@@ -74,9 +74,9 @@ def heapify(lst, low, high, sort_crit):
 
     Args:
         lst (list): La lista a ordenar.
-        low (_type_): límite inferior de la sublista a ordenar según el
+        low (int): límite inferior de la sublista a ordenar según el
         montículo.
-        high (_type_): límite superior de la sublista a ordenar según el
+        high (int): límite superior de la sublista a ordenar según el
         montículo.
         sort_crit (func): Es una función definida por el usuario que
         representa el criterio de ordenamiento.
@@ -100,9 +100,9 @@ def sift(lst, low, high, sort_crit):
 
     Args:
         lst (list): La lista a ordenar.
-        low (_type_): límite inferior de la sublista a ordenar según el
+        low (int): límite inferior de la sublista a ordenar según el
         montículo.
-        high (_type_): límite superior de la sublista a ordenar según el
+        high (int): límite superior de la sublista a ordenar según el
         montículo.
         sort_crit (func): Es una función definida por el usuario que
         representa el criterio de ordenamiento.
@@ -116,19 +116,14 @@ def sift(lst, low, high, sort_crit):
     # si el hijo izquierdo es mayor que el padre
     if i_left < high and not sort_crit(lt.getElement(lst, i_left),
                                        lt.getElement(lst, parent)):
-        # print("go left")
         parent = i_left
     # si el hijo derecho es mayor que el padre
     if i_right < high and not sort_crit(lt.getElement(lst, i_right),
                                         lt.getElement(lst, parent)):
-        # print("go right")
         parent = i_right
     # si el padre no es el mayor
     if parent != low:
         # intercambiar el padre con el mayor de los hijos
         lt.exchange(lst, low, parent)
-        # print("sift parent!!!")
         # invocar recursivamente la función sift
         sift(lst, parent, high, sort_crit)
-    # FIXME: ¿Por qué no se retorna la lista?
-    # return last
