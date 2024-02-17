@@ -30,25 +30,25 @@ import random
 from DISClib.ADT import list as lt
 assert cf
 
-def sort(lst,size):
-    
-    for pos in range(1,size):
-        random_pos = random.randint(1,size)
-        lt.exchange(lst,pos,random_pos)
-        
-    return lst
 
-def is_sorted(lst,sort_crit,size):
-    
-    for pos in range(1,size):
-        if sort_crit(lt.getElement(lst,pos),lt.getElement(lst,pos+1)) != True:
-            return False
-        
-    return True
-
-def bogosort(lst,sort_crit):
-
+def sort(lst, sort_crit):
     size = lt.size(lst)
-    while is_sorted(lst,sort_crit,size) != True:
-        lst = sort(lst,size)
+    while is_sorted(lst, sort_crit, size) is not True:
+        lst = bogotsort(lst, size)
     return lst
+
+
+def bogotsort(lst, size):
+    # size = lt.size(lst)
+    for pos in range(1, size):
+        random_pos = random.randint(1, size)
+        lt.exchange(lst, pos, random_pos)
+    return lst
+
+
+def is_sorted(lst, sort_crit, size):
+    for pos in range(1, size):
+        if sort_crit(lt.getElement(lst, pos),
+                     lt.getElement(lst, pos+1)) is not True:
+            return False
+    return True
