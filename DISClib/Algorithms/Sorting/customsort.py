@@ -30,51 +30,39 @@ from DISClib.ADT import list as lt
 assert cf
 
 """
-  Los algoritmos de este libro están basados en la implementación
-  propuesta por R.Sedgewick y Kevin Wayne en su libro
-  Algorithms, 4th Edition
+El algoritmo de ordenamiento que se implementa en este módulo pueden ser:
+    1) Tim Sort
+    2) Bucket Sort
+
+    El pseudocódigo para Tim Sort es:
+        # TODO completar documentación
+
+    Para mayor información sobre Tim Sort, ver:
+        - https://en.wikipedia.org/wiki/Timsort
+        - https://www.geeksforgeeks.org/timsort/
+        # TODO completar con más referencias
+
+    El pseudocódigo para Bucket Sort es:
+        # TODO completar documentación
+
+    Para mayor información sobre Bucket Sort, ver:
+        - https://en.wikipedia.org/wiki/Bucket_sort
+        - https://www.geeksforgeeks.org/bucket-sort-2/
+        # TODO completar con más referencias
 """
 
 
-def sort_old(lst, sort_crit):
-    size = lt.size(lst)
-    if size > 1:
-        mid = (size // 2)
-        """se divide la lista original, en dos partes, izquierda y derecha,
-        desde el punto mid."""
-        leftlist = lt.subList(lst, 1, mid)
-        rightlist = lt.subList(lst, mid+1, size - mid)
+def sort(lst, sort_crit):
+    """sort ordena una lista de elementos utilizando el algoritmo
+    implementado por el usuario. puede ser Tim Sort o Bucket Sort.
 
-        """se hace el llamado recursivo con la lista izquierda y derecha"""
-        sort(leftlist, sort_crit)
-        sort(rightlist, sort_crit)
+    Args:
+        lst (list): La lista a ordenar.
+        sort_crit (func): Es una función definida por el usuario que
+        representa el criterio de ordenamiento.
 
-        """i recorre la lista izquierda, j la derecha y k la lista original"""
-        i = j = k = 1
-
-        leftelements = lt.size(leftlist)
-        rightelements = lt.size(rightlist)
-
-        while (i <= leftelements) and (j <= rightelements):
-            elemi = lt.getElement(leftlist, i)
-            elemj = lt.getElement(rightlist, j)
-            """compara y ordena los elementos"""
-            if sort_crit(elemj, elemi):   # caso estricto elemj < elemi
-                lt.changeInfo(lst, k, elemj)
-                j += 1
-            else:                            # caso elemi <= elemj
-                lt.changeInfo(lst, k, elemi)
-                i += 1
-            k += 1
-
-        """Agrega los elementos que no se comprararon y estan ordenados"""
-        while i <= leftelements:
-            lt.changeInfo(lst, k, lt.getElement(leftlist, i))
-            i += 1
-            k += 1
-
-        while j <= rightelements:
-            lt.changeInfo(lst, k, lt.getElement(rightlist, j))
-            j += 1
-            k += 1
+    Returns:
+        list: La lista ordenada.
+    """
+    # TODO implementar el algoritmo de ordenamiento seleccionado lab 5
     return lst
