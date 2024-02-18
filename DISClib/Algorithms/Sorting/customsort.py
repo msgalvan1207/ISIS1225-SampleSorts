@@ -65,4 +65,5 @@ def sort(lst, sort_crit):
         list: La lista ordenada.
     """
     # TODO implementar el algoritmo de ordenamiento seleccionado lab 5
+    # TODO cree todas las funciones y variables auxiliares que necesite
     return lst
