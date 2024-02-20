@@ -132,7 +132,7 @@ def sortBooks(control):
     con getTime(). Finalmente calcula el tiempo que demoró la ejecución
     de la función con deltaTime()
     """
-     # TODO incluir resutlado en la toma de tiempos (Parte 1).
+    # TODO incluir resutlado en la toma de tiempos (Parte 1).
     start_time = getTime()
     model.sortBooks(control["model"])
     end_time = getTime()
