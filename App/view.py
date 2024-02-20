@@ -133,7 +133,7 @@ algo_str = """Seleccione el algoritmo de ordenamiento:
                  5. Quick Sort ||
                  6. Heap Sort ||
                  7. Bogo Sort ||
-                 8. Custom Sort (Tim Sort o Bucket Sort)):"""
+                 8. Custom Sort (Tim Sort o Patience Sort)):"""
 exit_opt_lt = ("s", "S", "1", True, "true", "True", "si", "Si", "SI")
 
 # main del ejercicio

@@ -224,7 +224,7 @@ def selectSortAlgorithm(algo_opt):
     elif algo_opt == 8:
         # pass
         sort_algorithm = cus
-        algo_msg = "Seleccionó la configuración - Custom Sort (Tim o Bucket)"
+        algo_msg = "Seleccionó la configuración - Custom Sort (Tim o Patience)"
     # respuesta final: algoritmo de ordenamiento y texto de configuracion
     return sort_algorithm, algo_msg
 
@@ -335,5 +335,6 @@ def sortBooks(catalog):
     # TODO completar los cambios del return en el sort para el lab 5 (Parte 1).
     # TODO nuevo del lab 5
     sorted_books = catalog["booksublist"]
-    sort_algorithm.sort(sorted_books, evalRatings)
+    sorted_books = sort_algorithm.sort(sorted_books, evalRatings)
+    # catalog["booksublist"] = sorted_books
     return sorted_books

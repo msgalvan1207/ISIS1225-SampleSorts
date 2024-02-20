@@ -55,7 +55,6 @@ def patienceSorting(arr):
         if not piles:
             # Initialize a new pile
             temp = []
-
             # Insert current element into the pile
             temp.append(arr[i])
 
