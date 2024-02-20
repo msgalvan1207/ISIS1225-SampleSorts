@@ -66,14 +66,16 @@ def sort(lst, sort_crit):
     """
     # TODO implementar el algoritmo de ordenamiento seleccionado lab 5
     # TODO cree todas las funciones y variables auxiliares que necesite
-    # print(lst)
+    # decide el tamaño de la corrida
     n = lt.size(lst)
     minRun = setMinRun(n)
 
+    # parte del insertion sort
     for start in range(1, n, minRun):
         end = min(start + minRun, n)
         insertion(lst, sort_crit, start, end)
 
+    # parte del merge sort
     size = minRun
     while size < n:
         for left in range(1, n, 2 * size):
@@ -82,7 +84,6 @@ def sort(lst, sort_crit):
             if mid < right:
                 merge(lst, sort_crit, left, mid, right)
         size = 2 * size
-
     return lst
 
 
@@ -102,6 +103,7 @@ def setMinRun(n):
     """
     # TODO implementar el cálculo del tamaño mínimo de la corrida
     R = 0
+    # toca explicar esto mejor
     while n >= MIN_MERGE:
         R |= n & 1
         n >>= 1
@@ -122,6 +124,7 @@ def insertion(lst, sort_crit, left_idx, right_idx):
     Returns:
         list: La lista ordenada.
     """
+    # esto es insertionsort casi que puro
     for i in range(left_idx + 1, right_idx + 1):
         j = i
         while j > left_idx and sort_crit(lt.getElement(lst, j),
@@ -146,6 +149,7 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
     Returns:
         list: La lista ordenada.
     """
+    # esto es del timsort
     size1, size2 = mid_idx - left_idx + 1, right_idx - mid_idx
     struct_config = lst["type"]
     struct_cmp = lst["cmpfunction"]
@@ -153,6 +157,7 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
                          cmpfunction=struct_cmp)
     right_lt = lt.newList(struct_config,
                           cmpfunction=struct_cmp)
+    # esto es del mergesort
     for i in range(1, size1):
         lt.addLast(left_lt, lt.getElement(lst, left_idx + i))
     for i in range(1, size2):
