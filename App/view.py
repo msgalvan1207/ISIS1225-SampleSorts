@@ -129,7 +129,7 @@ if __name__ == "__main__":
             control = newController()
             print("Cargando información de los archivos ....")
             bk, at, tg, bktg = loadData()
-            print("Libros cargados: " + str(bk))
+            print("Libros cargado1s: " + str(bk))
             print("Autores cargados: " + str(at))
             print("Géneros cargados: " + str(tg))
             print("Asociación de Géneros a Libros cargados: " + str(bktg))
@@ -162,7 +162,9 @@ if __name__ == "__main__":
 
         elif int(inputs[0]) == 7:
             # TODO completar modificaciones para el lab 5
-            pass
+            print("Ordenando los libros por rating ...")
+            result = controller.sortBooks(control)
+            print("tiempo de ejecución:", f"{result:.3f}", "[ms]")
 
         elif int(inputs[0]) == 0:
             # confirmar salida del programa

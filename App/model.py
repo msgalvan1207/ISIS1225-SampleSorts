@@ -1,4 +1,4 @@
-"""
+﻿"""
  * Copyright 2020, Departamento de sistemas y Computación,
  * Universidad de Los Andes
  *
@@ -222,9 +222,8 @@ def selectSortAlgorithm(algo_opt):
     # opcion 6: Custom Sort, timsort o bucketsort
     # TODO completar el ordenamiento personalizado para el lab 5
     elif algo_opt == 8:
-        # pass
         sort_algorithm = cus
-        algo_msg = "Seleccionó la configuración - Custom Sort (Tim o Patience)"
+        algo_msg = "Seleccionó la configuración - Custom Sort (Tim, Patience)"
     # respuesta final: algoritmo de ordenamiento y texto de configuracion
     return sort_algorithm, algo_msg
 
@@ -332,8 +331,6 @@ def evalRatings(book1, book2):
 # Funciones de ordenamiento
 
 def sortBooks(catalog):
-    # TODO completar los cambios del return en el sort para el lab 5 (Parte 1).
+    # TODO completar los cambios del return para el sort lab 5 (Parte 1).
     sorted_books = catalog["booksublist"]
-    sorted_books = sort_algorithm.sort(sorted_books, evalRatings)
-    # catalog["booksublist"] = sorted_books
-    return sorted_books
+    sort_algorithm.sort(sorted_books, evalRatings)

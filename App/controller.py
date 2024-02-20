@@ -94,7 +94,7 @@ def loadBooks(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    booksfile = cf.data_dir + "GoodReads/books.csv"
+    booksfile = cf.data_dir + "GoodReads/books-small.csv"
     input_file = csv.DictReader(open(booksfile, encoding="utf-8"))
     for book in input_file:
         model.addBook(catalog, book)
@@ -116,7 +116,7 @@ def loadBooksTags(catalog):
     """
     Carga la información que asocia tags con libros.
     """
-    booktagsfile = cf.data_dir + "GoodReads/book_tags.csv"
+    booktagsfile = cf.data_dir + "GoodReads/book_tags-small.csv"
     input_file = csv.DictReader(open(booktagsfile, encoding="utf-8"))
     for booktag in input_file:
         model.addBookTag(catalog, booktag)
@@ -132,12 +132,12 @@ def sortBooks(control):
     con getTime(). Finalmente calcula el tiempo que demoró la ejecución
     de la función con deltaTime()
     """
-     # TODO completar la funcion para incluir toma de tiempos y ejecucion del resultado (Parte 2).
+     # TODO incluir resutlado en la toma de tiempos (Parte 1).
     start_time = getTime()
-    sorted_books = model.sortBooks(control["model"])
+    model.sortBooks(control["model"])
     end_time = getTime()
     delta_time = deltaTime(start_time, end_time)
-    return sorted_books, delta_time
+    return delta_time
 
 
 # Funciones de consulta sobre el catálogo
