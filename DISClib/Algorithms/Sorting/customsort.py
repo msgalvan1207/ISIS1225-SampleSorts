@@ -33,7 +33,7 @@ assert cf
 El algoritmo de ordenamiento que se implementa en este módulo puede ser:
     1) Tim Sort 
     ó
-    2) Bucket Sort
+    2) Patience Sort
 
     El pseudocódigo para Tim Sort es:
         Function timSort(arr, n)
