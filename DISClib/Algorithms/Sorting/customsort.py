@@ -42,12 +42,12 @@ El algoritmo de ordenamiento que se implementa en este módulo pueden ser:
         - https://www.geeksforgeeks.org/timsort/
         # TODO completar con más referencias
 
-    El pseudocódigo para Bucket Sort es:
+    El pseudocódigo para Patience Sort es:
         # TODO completar documentación
 
     Para mayor información sobre Bucket Sort, ver:
-        - https://en.wikipedia.org/wiki/Bucket_sort
-        - https://www.geeksforgeeks.org/bucket-sort-2/
+        - https://en.wikipedia.org/wiki/Patience_sorting
+        - https://www.geeksforgeeks.org/patience-sorting/
         # TODO completar con más referencias
 """
 
