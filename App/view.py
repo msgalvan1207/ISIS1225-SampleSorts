@@ -88,36 +88,9 @@ def printBestBooks(books):
         print("No se encontraron libros")
 
 
-def print_select_sort(algo_msg):
-    print("Configuración del algoritmo:\n\t", algo_msg)
-    # return slctd_algo
-
-
 def printSortResults(sort_books, sample=3):
     # TODO completar funcion para imprimir resultados sort lab 5
-    # TODO nuevo lab 5
-    size = lt.size(sort_books)
-    if size <= sample*2:
-        print("Los", size, "libros ordenados son:")
-        for book in lt.iterator(sort_books):
-            print('Titulo: ' + book['title'] + ' ISBN: ' +
-                  book['isbn'] + ' Rating: ' + book['average_rating'])
-    else:
-        print("Los", sample, "primeros libros ordenados son:")
-        i = 1
-        while i <= sample:
-            book = lt.getElement(sort_books, i)
-            print('Titulo: ' + book['title'] + ' ISBN: ' +
-                  book['isbn'] + ' Rating: ' + book['average_rating'])
-            i += 1
-
-        print("Los", sample, "últimos libros ordenados son:")
-        i = size - sample + 1
-        while i <= size:
-            book = lt.getElement(sort_books, i)
-            print('Titulo: ' + book['title'] + ' ISBN: ' +
-                  book['isbn'] + ' Rating: ' + book['average_rating'])
-            i += 1
+    pass
 
 
 # Variable asociada al controlador de la vista, por defecto None
@@ -177,27 +150,19 @@ if __name__ == "__main__":
             print("Se encontraron: ", book_count, " Libros")
 
         elif int(inputs[0]) == 5:
-            # TODO nuevo lab 5
             algo_opt = input(algo_str)
             algo_opt = int(algo_opt)
             algo_msg = controller.setSortAlgorithm(algo_opt)
             print(algo_msg)
 
         elif int(inputs[0]) == 6:
-            # TODO nuevo lab 5
             size = input("Indique tamaño de la muestra: ")
             size = int(size)
             control = controller.setBookSublist(control, size)
 
         elif int(inputs[0]) == 7:
             # TODO completar modificaciones para el lab 5
-            print("Ordenando los libros ....")
-            result = controller.sortBooks(control)
-            sortedBooks = result[0]
-            DeltaTime = f"{result[1]:.3f}"
-            print("Para", size, "elementos, el tiempo es:",
-                  str(DeltaTime), "[ms]")
-            printSortResults(sortedBooks)
+            pass
 
         elif int(inputs[0]) == 0:
             # confirmar salida del programa
@@ -207,8 +172,6 @@ if __name__ == "__main__":
             if opt_usr in exit_opt_lt:
                 working = False
                 print("\nGracias por utilizar el programa.")
-            # working = False
-            # print("\nGracias por utilizar el programa.")
 
         else:
             continue
