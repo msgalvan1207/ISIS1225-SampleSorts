@@ -36,7 +36,7 @@ from DISClib.Algorithms.Sorting import heapsort as hes
 from DISClib.Algorithms.Sorting import bogosort as bos
 
 # TODO importar el modulo de ordenamiento personalizado para el lab 5
-# from DISClib.Algorithms.Sorting import customsort as cus
+from DISClib.Algorithms.Sorting import customsort as cus
 assert cf
 
 """
@@ -223,7 +223,7 @@ def selectSortAlgorithm(algo_opt):
     # TODO completar el ordenamiento personalizado para el lab 5
     elif algo_opt == 8:
         # pass
-        # sort_algorithm = cus
+        sort_algorithm = cus
         algo_msg = "Seleccionó la configuración - Custom Sort (Tim o Bucket)"
     # respuesta final: algoritmo de ordenamiento y texto de configuracion
     return sort_algorithm, algo_msg
