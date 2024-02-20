@@ -30,29 +30,130 @@ from DISClib.ADT import list as lt
 assert cf
 
 """
-El algoritmo de ordenamiento que se implementa en este módulo pueden ser:
+El algoritmo de ordenamiento que se implementa en este módulo puede ser:
     1) Tim Sort
-    2) Bucket Sort
+    2) Patience Sort
 
+    ######################## TIM SORT ########################
+    
     El pseudocódigo para Tim Sort es:
-        # TODO completar documentación
+
+        ------------------------------------------
+        Function timSort(arr, n)
+            min_run = 32
+            For i = 0 to n step min_run
+                insertionSort(arr, i, min(i+min_run-1, n-1))
+            End For
+            current_size = min_run
+            While current_size < n
+                For left = 0 to n step 2*current_size
+                    mid = min(left + current_size - 1, n-1)
+                    right = min(left + 2*current_size - 1, n-1)
+                    merge(arr, left, mid, right)
+                End For
+                current_size = current_size * 2
+            End While
+        End Function
+        ------------------------------------------
+
+    El pseucodógido para la variante del algoritmo de ordenamiento por
+    inserción es:
+
+        ------------------------------------------
+        Function insertion(arr, left, right)
+            For i = left+1 to right
+                j = i
+                While j > left and arr[j] < arr[j-1]
+                    swap(arr[j], arr[j-1])
+                    j = j-1
+                End While
+            End For
+        End Function
+        ------------------------------------------
+
+    El pseudocódigo para el algoritmo de ordenamiento por merge es:
+
+        ------------------------------------------
+        Function merge(arr, left, mid, right)
+            len1 = m - l + 1
+            len2 = r - m
+            l = new Array(len1)
+            r = new Array(len2)
+            For i = 0 to len1
+                l[i] = arr[l + i]
+            End For
+            For i = 0 to len2
+                r[i] = arr[m + 1 + i]
+            End For
+            i = 0
+            j = 0
+            k = l
+            While i < len1 and j < len2
+                If l[i] <= r[j]
+                    arr[k] = l[i]
+                    i = i + 1
+                Else
+                    arr[k] = r[j]
+                    j = j + 1
+                End If
+                k = k + 1
+            End While
+            While i < len1
+                arr[k] = l[i]
+                i = i + 1
+                k = k + 1
+            End While
+            While j < len2
+                arr[k] = r[j]
+                j = j + 1
+                k = k + 1
+            End While
+        End Function
+        ------------------------------------------
 
     Para mayor información sobre Tim Sort, ver:
         - https://en.wikipedia.org/wiki/Timsort
         - https://www.geeksforgeeks.org/timsort/
-        # TODO completar con más referencias
+        - https://www.youtube.com/watch?v=_dlzWEJoU7I
 
-    El pseudocódigo para Patience Sort es:
-        # TODO completar documentación
 
-    Para mayor información sobre Patient Sort, ver:
-        - https://en.wikipedia.org/wiki/Patience_sorting
-        - https://www.geeksforgeeks.org/patience-sorting/
-        # TODO completar con más referencias
+
+    ################# PATIENCE SORT #################
+
+    El pseuocodigo para Patience Sort es:
+        ------------------------------------------
+        Function patienceSort(arr, n)
+            piles = 0
+            top = new Array(n)
+            for i = 0 to n
+                left = 0
+                right = piles
+                while left < right
+                    mid = (left + right)/2
+                    if arr[i] > top[mid]
+                        left = mid + 1
+                    else
+                        right = mid
+                    end if
+                end while
+                if left == piles
+                    piles = piles + 1
+                end if
+                top[left] = arr[i]
+            end for
+            return piles
+        End Function
+        ------------------------------------------
+
+    Para mayor información sobre Patience Sort, ver:
+        - https://en.wikipedia.org/wiki/Patience_sort
+        - https://www.geeksforgeeks.org/patience-sort/
+        - https://www.youtube.com/watch?v=K9M6g7BiBX4
+
 """
 
 
-def sort2(lst, sort_crit):
+def sort1(lst, sort_crit):
     """sort ordena una lista de elementos utilizando el algoritmo
     implementado por el usuario. puede ser Tim Sort o Patient Sort.
 
@@ -201,14 +302,24 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
         k += 1
         j += 1
 
-
 # ===========================================
 # Funciones auxiliares para Patience Sort
 # ===========================================
 
-def sort(lst, sort_crit):
 
-    # configura la estructura de datos para el algoritmo
+def sort2(lst, sort_crit):
+    """sort ordena una lista de elementos utilizando el algoritmo
+    implementado por el usuario. puede ser Tim Sort o Patient Sort.
+
+    Args:
+        lst (list): La lista a ordenar.
+        sort_crit (func): Es una función definida por el usuario que
+        representa el criterio de ordenamiento.
+
+    Returns:
+        list: La lista ordenada.
+    """
+    # configura la estructura de datos auxiliar para el algoritmo
     struct_config = lst["type"]
     struct_cmp = lst["cmpfunction"]
     # lista de pilas
@@ -260,6 +371,17 @@ def sort(lst, sort_crit):
 
 
 def merge_pile(pile_lt, sort_crit):
+    """merge_pile resive una lista de pilas y las fusiona en una sola lista
+    ordenada.
+
+    Args:
+        pile_lt (list): lista de pilas a fusionar.
+        sort_crit (func): Es una función definida por el usuario que
+        representa el criterio de ordenamiento.
+
+    Returns:
+        list: lista ordenada.
+    """
     # crea lista resultante con la misma configuración de la lista a ordenar
     struct_config = pile_lt["type"]
     struct_cmp = pile_lt["cmpfunction"]
