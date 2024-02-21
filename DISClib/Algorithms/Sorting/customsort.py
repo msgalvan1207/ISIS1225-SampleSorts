@@ -153,7 +153,7 @@ El algoritmo de ordenamiento que se implementa en este módulo puede ser:
 """
 
 
-def sort1(lst, sort_crit):
+def sort(lst, sort_crit):
     """sort ordena una lista de elementos utilizando el algoritmo
     implementado por el usuario. puede ser Tim Sort o Patient Sort.
 
