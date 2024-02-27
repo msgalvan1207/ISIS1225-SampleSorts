@@ -26,6 +26,7 @@
 import config as cf
 import sys
 import controller
+import itertools
 from DISClib.ADT import list as lt
 assert cf
 
@@ -89,9 +90,40 @@ def printBestBooks(books):
 
 
 def printSortResults(sort_books, sample=3):
+    iter = itertools.count()
+    num = next(iter)
     # TODO completar funcion para imprimir resultados sort lab 5
+    size = lt.size(sort_books)
+    if size <= sample*2:
+        print("Los {} libros ordenados son: ".format(size))
+        for book in lt.iterator(sort_books):
+            num = next(iter)
+            print("Numero {} Titulo {} ISBN {} Rating {}".format(num,book["title"], book["isbn"], book["average_rating"]))
+    else:
+        print("Los {} primeros libros ordenados son: ".format(sample))
+        i = 1
+        while i <= sample:
+            book = lt.getElement(sort_books, i)
+            print("Numero {} Titulo {} ISBN {} Rating {}".format(i, book["title"], book["isbn"], book["average_rating"]))
+            i += 1
+        
+        print("Los {} últimos libros ordenados son: ".format(sample))
+        i = size - sample + 1
+        while i <= size:
+            book = lt.getElement(sort_books, i)
+            print("Numero {} Titulo {} ISBN {} Rating {}".format(i, book["title"], book["isbn"], book["average_rating"]))
+            i += 1
     pass
 
+
+def inputTry():
+    while True:
+        try:
+            inputs = input("Seleccione una opción para continuar\n")
+            return int(inputs)
+        except ValueError:
+            print("Por favor ingrese un número entero")
+            continue
 
 # Variable asociada al controlador de la vista, por defecto None
 control = None
@@ -123,7 +155,8 @@ if __name__ == "__main__":
     # ciclo del menu
     while working:
         printMenu()
-        inputs = input("Seleccione una opción para continuar\n")
+        inputs = input("Seleccione una opción para continuar\n")#inputTry()
+        
         if int(inputs[0]) == 1:
             # se inicia un controlador nuevo y se cargan los datos
             control = newController()
@@ -162,9 +195,13 @@ if __name__ == "__main__":
 
         elif int(inputs[0]) == 7:
             # TODO completar modificaciones para el lab 5
+            sample = int(input("Indique el tamaño de la muestra: "))
             print("Ordenando los libros por rating ...")
             result = controller.sortBooks(control)
-            print("tiempo de ejecución:", f"{result:.3f}", "[ms]")
+            sortedBooks = result[0]
+            deltaTime = f"{result[1]:.3f}"
+            print("Tiempo de ejecución: ", deltaTime, " segundos")
+            printSortResults(sortedBooks, sample)
 
         elif int(inputs[0]) == 0:
             # confirmar salida del programa

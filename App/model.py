@@ -323,9 +323,9 @@ def cmpBooks(bookid1, book):
 
 # funciones para comparar elementos dentro de algoritmos de ordenamientos
 
-def evalRatings(book1, book2):
+def evalRatings(book1, book2): # book1 < book2
     # TODO modificar operador de comparacion del lab 5
-    return (float(book1["average_rating"]) > float(book2["average_rating"]))
+    return (float(book1["average_rating"]) < float(book2["average_rating"]))
 
 
 # Funciones de ordenamiento
@@ -334,3 +334,5 @@ def sortBooks(catalog):
     # TODO completar los cambios del return para el sort lab 5 (Parte 1).
     sorted_books = catalog["booksublist"]
     sort_algorithm.sort(sorted_books, evalRatings)
+    
+    return sorted_books

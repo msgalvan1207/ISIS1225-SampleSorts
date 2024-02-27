@@ -87,7 +87,7 @@ El algoritmo de ordenamiento que se implementa en este módulo puede ser:
             End For
             i = 0
             j = 0
-            k = l
+            k = left  LA VARIABLE K DEBE SER IGUAL A LEFT PORQUE ES DESDE DONDE SE HACE MERGE AAA
             While i < len1 and j < len2
                 If l[i] <= r[j]
                     arr[k] = l[i]
@@ -167,8 +167,24 @@ def sort(lst, sort_crit):
     """
     # TODO implementar el algoritmo de ordenamiento seleccionado lab 5
     # TODO cree todas las funciones y variables auxiliares que necesite
-
+    print("entra funcion sort de customsort")
+    n = lt.size(lst)
+    minRun = setMinRun(n)
+    print("minRun es igual a {}".format(minRun))
+    
+    for i in range(1, n, minRun):
+        print(i,min(i+minRun-1, n))
+        insertion(lst, sort_crit, i, min(i+minRun-1, n))
     # retorna la lista ordenada
+    
+    current_size = minRun
+    while current_size < n:
+        for left in range(1,n,2*current_size):
+            mid = min(left + current_size - 1, n)
+            right = min(left + 2*current_size - 1, n)
+            print("left: {} mid: {} right: {}".format(left,mid,right))
+            merge(lst, sort_crit, left, mid, right)
+        current_size = current_size * 2
     return lst
 
 
@@ -214,7 +230,14 @@ def insertion(lst, sort_crit, left_idx, right_idx):
         list: La lista ordenada.
     """
     # TODO implementar la parte del insertion para el timsort en el lab 5
-    pass
+    for i in range(left_idx+1, right_idx):
+        j = i
+        while j > left_idx and sort_crit(lt.getElement(lst, j), lt.getElement(lst, j-1)):
+            elemj = lt.getElement(lst, j)
+            elemj1 = lt.getElement(lst, j-1)
+            lt.changeInfo(lst, j, elemj1)
+            lt.changeInfo(lst, j-1, elemj)
+            j -= 1
 
 
 def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
@@ -232,6 +255,40 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
         list: La lista ordenada.
     """
     # TODO implementar la parte del merge para el timsort en el lab 5
+    
+    len1 = mid_idx - left_idx + 1
+    len2 = right_idx - mid_idx
+    print("len1: {} len2: {}".format(len1,len2))
+    
+    leftLst = lt.subList(lst, left_idx, len1)
+    rightLst = lt.subList(lst, mid_idx+1, len2)
+    testLst = lt.subList(lst, left_idx, len1+len2)
+    
+    
+    i = j = 1
+    k = left_idx
+    
+    while i <= len1 and j <= len2:
+        if sort_crit(lt.getElement(leftLst, i), lt.getElement(rightLst, j)):
+            lt.changeInfo(lst, k, lt.getElement(leftLst, i))
+            i += 1
+        else:
+            lt.changeInfo(lst, k, lt.getElement(rightLst, j))
+            j += 1
+        k += 1
+    
+    while i <= len1:
+        lt.changeInfo(lst, k, lt.getElement(leftLst, i))
+        i += 1
+        k += 1
+    
+    while j <= len2:
+        lt.changeInfo(lst, k, lt.getElement(rightLst, j))
+        j += 1
+        k += 1
+    
+    
+    
     pass
 
 # ===========================================
@@ -240,7 +297,7 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
 
 
 def merge_pile(pile_lt, sort_crit):
-    """merge_pile resive una lista de pilas y las fusiona en una sola lista
+    """merge_pile recibe una lista de pilas y las fusiona en una sola lista
     ordenada.
 
     Args:
