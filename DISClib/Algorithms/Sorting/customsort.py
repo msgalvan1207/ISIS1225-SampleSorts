@@ -122,6 +122,8 @@ El algoritmo de ordenamiento que se implementa en este módulo puede ser:
     ################# PATIENCE SORT #################
 
     El pseuocodigo para Patience Sort es:
+    este pseudocodigo es una mentira porqu devuelve la longitud de la cadena subsecuente mas larga
+    algo algo idk
         ------------------------------------------
         Function patienceSort(arr, n)
             piles = 0
