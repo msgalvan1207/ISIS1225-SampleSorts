@@ -28,6 +28,7 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
+from App.view import printSortResults
 assert cf
 
 """
@@ -181,12 +182,14 @@ def sort(lst, sort_crit):
     # retorna la lista ordenada
     
     current_size = minRun
-    while current_size < n:
+    while current_size <= n:
         for left in range(1,n,2*current_size):
             mid = min(left + current_size - 1, n)
             right = min(left + 2*current_size - 1, n)
             print("left: {} mid: {} right: {}".format(left,mid,right))
-            merge(lst, sort_crit, left, mid, right)
+
+            if (mid < right):
+                merge(lst, sort_crit, left, mid, right)
         current_size = current_size * 2
     return lst
 
@@ -233,13 +236,12 @@ def insertion(lst, sort_crit, left_idx, right_idx):
         list: La lista ordenada.
     """
     # TODO implementar la parte del insertion para el timsort en el lab 5
-    for i in range(left_idx+1, right_idx):
+    for i in range(left_idx+1, right_idx+1):
+        print("i: {}".format(i))
         j = i
         while j > left_idx and sort_crit(lt.getElement(lst, j), lt.getElement(lst, j-1)):
-            elemj = lt.getElement(lst, j)
-            elemj1 = lt.getElement(lst, j-1)
-            lt.changeInfo(lst, j, elemj1)
-            lt.changeInfo(lst, j-1, elemj)
+            lt.exchange(lst, j, j-1)
+            #print("j: {}".format(j))
             j -= 1
 
 
@@ -265,6 +267,9 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
     
     leftLst = lt.subList(lst, left_idx, len1)
     rightLst = lt.subList(lst, mid_idx+1, len2)
+
+    printSortResults(leftLst,len1)
+    printSortResults(rightLst,len2)
     
     
     i = j = 1
