@@ -27,6 +27,7 @@
 
 import config as cf
 from DISClib.ADT import list as lt
+from DISClib.ADT import stack as st
 assert cf
 
 """
@@ -262,7 +263,6 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
     
     leftLst = lt.subList(lst, left_idx, len1)
     rightLst = lt.subList(lst, mid_idx+1, len2)
-    testLst = lt.subList(lst, left_idx, len1+len2)
     
     
     i = j = 1
@@ -309,4 +309,59 @@ def merge_pile(pile_lt, sort_crit):
         list: lista ordenada.
     """
     # TODO implementar la parte del merge para el patience sort en el lab 5
+    
+    minu = st.top(lt.getElement(pile_lt, 1))
+    index = -1
+    
+    ret = lt.newList("ARRAY_LIST")
+    
+    while True:
+        
+        for i in lt.iterator(pile_lt):
+            if st.isEmpty(i):
+                pile_lt = lt.deleteElement(pile_lt, lt.isPresent(pile_lt, i))
+            if sort_crit(st.top(i), minu):
+                minu = st.top(i)
+                index = i #stack i tiene la cabeza mas pequeña
+        
+        lt.addLast(ret, st.pop(lt.getElement(pile_lt, index)))
+        
+        if lt.isEmpty(pile_lt):
+            break
+    return ret
+
+
+def patienceSort(lst, sort_crit):
+    """patienceSort ordena una lista de elementos utilizando el algoritmo
+    de paciencia.
+
+    Args:
+        lst (list): La lista a ordenar.
+        sort_crit (func): Es una función definida por el usuario que
+        representa el criterio de ordenamiento.
+
+    Returns:
+        list: La lista ordenada.
+    """
+    # TODO implementar el algoritmo de ordenamiento por paciencia en el lab 5
+    pileList = lt.newList("ARRAY_LIST")
+    
+    for i in lt.iterator(lst):
+        if lt.isEmpty(pileList):
+            pile = st.newStack()
+            st.push(pile, i)
+            lt.addLast(pileList, pile)
+        else:
+            for pile in lt.iterator(pileList):
+                found = False
+                if sort_crit(i, st.top(pile)):
+                    st.push(pile, i)
+                    found = True
+                    break
+            if not(found):
+                pile = st.newStack()
+                st.push(pile, i)
+                lt.addLast(pileList, pile)
+    
+    return merge_pile(pileList, sort_crit)
     pass
